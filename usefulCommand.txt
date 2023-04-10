@@ -1,4 +1,22 @@
 Create react app: 
 npx create-react-app ./
 
-hey now
+running server:
+npm run dev
+
+running client:
+npm start
+
+connect node.js and MySQL
+https://www.youtube.com/watch?v=YNN3nSrT-lc&t=167s
+
+connect react.js and node.js 
+https://www.youtube.com/watch?v=w3vs4a03y3I&t=323s
+
+object to json data conversion after query result(node.js)
+https://www.youtube.com/watch?v=sSeKGS2aKrk
+
+
+
+
+
