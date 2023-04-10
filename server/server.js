@@ -23,6 +23,7 @@ connection.connect(function(err) {
 const express = require('express');
 const app = express();
 
+
 app.get('/getMoistures', function (req, res) {
     connection.query('SELECT * FROM moisture_sensor', function (error, results, fields) {
     if (error) throw error;
@@ -42,6 +43,7 @@ app.get('/getMoistures', function (req, res) {
 //       res.json({ "users": ["userOne", "two","threeer"] })
 // });
   
+
 
 app.listen(4000, function () {
   console.log('App listening on port 4000!');
