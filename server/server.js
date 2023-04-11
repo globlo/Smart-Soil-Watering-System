@@ -26,14 +26,11 @@ const app = express();
 app.get('/getMoistures', function (req, res) {
     connection.query('SELECT * FROM moisture_sensor', function (error, results, fields) {
     if (error) throw error;
-
     
-    
-    var data = JSON.parse(JSON.stringify(results))
-
-    console.log(data);
-    // res.json(data[0]);
-    res.json({ "users": ["userOne", "two","threeer"] })
+    // var data = JSON.parse(JSON.stringify(results))
+    // console.log(results);
+    res.send(results);
+    // res.json({ "users": ["userOne", "two","threeer"] })
   });
 });
 // app.get("/getMoistures", (req, res) => {
