@@ -11,20 +11,30 @@ function App() {
     ).then(
       data => {
         setBackendData(data)
+        // console.log(data)
       }
     )
   }, [])
 
+  console.log(typeof backendData)
+  var moisutures = JSON.stringify(backendData)
+  console.log(typeof moisutures)
   return (
     <div className="App">
 
-      {(typeof backendData.users === 'undefined') ? (
-        <p>Loading</p>
-      ) : backendData.users.map((user, i) => (
-        <p key={i}>{user}</p>
+      {(typeof backendData.moisuture === 'undefined') ? (
+        <p>Moisture</p>
+      ) : backendData.moisuture.map((moisuture, i) => (
+        <p key={i}>{moisuture}</p>
+        
       ))}
+
+      <p>{moisutures}</p>
+     
       
     </div>
+
+  
 
     // <div>heynow</div>
 
