@@ -1,42 +1,27 @@
 
 import './App.css';
-import React, { useEffect, useState} from 'react'
+import React, { useState, useEffect } from "react";
 
 function App() {
-  const [backendData, setBackendData] = useState([{}])
 
+  const [data, setData] = useState(undefined);
+  // ここを修正
   useEffect(() => {
-    fetch("/getMoistures").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-        // console.log(data)
-      }
-    )
-  }, [])
+    fetch("/getMoisture")
+      .then(res => res.json())
+      .then(res_json => setData(res_json))
+      .catch(() => console.log("error"));
+  }, []);
+   
+  console.log(data);
 
-  console.log(typeof backendData)
-  var moisutures = JSON.stringify(backendData)
-  console.log(typeof moisutures)
   return (
     <div className="App">
-
-      {(typeof backendData.moisuture === 'undefined') ? (
-        <p>Moisture</p>
-      ) : backendData.moisuture.map((moisuture, i) => (
-        <p key={i}>{moisuture}</p>
-        
-      ))}
-
-      <p>{moisutures}</p>
-     
       
+      {data === undefined ? "" : <div>{data.humidity}</div>}
+
     </div>
-
-  
-
-    // <div>heynow</div>
-  )
+  );
 }
+
 export default App;

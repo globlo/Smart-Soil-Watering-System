@@ -18,5 +18,34 @@ https://www.youtube.com/watch?v=sSeKGS2aKrk
 
 this cis just text
 
+##########################################
+////////////////  REACT  /////////////////
+##########################################
+
+Using API in React (Japanese article)
+https://lorem-co-ltd.com/react-fetch-api/
+
+
+
+##########################################
+///////////  MICROCONTROLLER  ////////////
+##########################################
+
+setup_using_STM32Board_in_ARduinoIDE
+https://microcontrollerslab.com/stm32-nucleo-arduino-ide-tutorial/
+
+send_and_receive_data_inSTM32_
+https://www.youtube.com/watch?v=92A98iEFmaA
+
+STM32F103C8T6 USB to MySQL database through Node JS ( Virtual Com Port )
+https://www.youtube.com/watch?v=nXKvWXlw6WM
+https://wiki.st.com/stm32mcu/wiki/STM32StepByStep:Step3_Introduction_to_the_UART
+
+Serial communication: ArduinoIDE to Node.js
+https://serialport.io/docs/guide-upgrade
+
+
+
+
 
 

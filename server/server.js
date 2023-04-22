@@ -1,45 +1,35 @@
-// Create a connection to MySQL:
-const mysql = require('mysql');
 
-const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "akky6223",
-    database: "soilmoisturesensor",
-    connectionLimit: 10
+//////////////////// GET DATA FROM IOT DEVICE ///////////////////////
+const { SerialPort } = require('serialport')
+const { ReadlineParser } = require('@serialport/parser-readline')
+
+const port = new SerialPort({ path: "COM12", baudRate: 9600 })
+const parser = port.pipe(new ReadlineParser());
+
+// Open Port
+port.on('open', function() {
+	console.log('connected!!!!!');
 });
 
-// Connect to MySQL:
-connection.connect(function(err) {
-    if (err) {
-      console.error('error connecting: ' + err.stack);
-      return;
-    }
-  
-    console.log('connected as id ' + connection.threadId);
-  });
+// Get data from IoT Device
+let str = [];
+parser.on('data', function(data) {
+	str = data.toString('UTF-8');
+	console.log(str);
+});
+
+
+//////////////// COMMUNICATION TO FRONT-END ///////////////////////
 
 // Create an Express app and define routes:  
 const express = require('express');
 const app = express();
 
 
-app.get('/getMoistures', function (req, res) {
-    connection.query('SELECT * FROM moisture_sensor', function (error, results, fields) {
-    if (error) throw error;
+app.get('/getMoisture', function (req, res) {
     
-    // var data = JSON.parse(JSON.stringify(results))
-    // console.log(results);
-    res.send(results);
-    // res.json({ "users": ["userOne", "two","threeer"] })
-  });
+  res.json({ "humidity": str })
 });
-// app.get("/getMoistures", (req, res) => {
-//     // connection.query('SELECT * FROM moisture_sensor', function (error, results, fields) {
-//     //   if (error) throw error;
-//       res.json({ "users": ["userOne", "two","threeer"] })
-// });
-  
 
 
 app.listen(4000, function () {
