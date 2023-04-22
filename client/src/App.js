@@ -7,7 +7,7 @@ import Controls from './components/Controls';
 
 function App() {
 
-  const [data, setData] = useState(undefined);
+  const [data, setData] = useState([]);
   // 
   useEffect(() => {
     fetch("/getMoisture")
@@ -38,14 +38,12 @@ function App() {
 
   return (
     <div className="App">
-      
-      {data === undefined ? "" : <div>{data.humidity}</div>}
 
       <header className="App-header">
         <h1>Soil Watering System</h1>
       </header>
       <main>
-        <RealTimeData soilMoisture={soilMoisture} pumpStatus={pumpStatus} />
+        <RealTimeData soilMoisture={data.humidity} pumpStatus={pumpStatus} />
         <HistoricalData history={history} />
         <Controls
           onTogglePump={togglePump}
