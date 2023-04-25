@@ -1,8 +1,10 @@
 Create react app: 
 npx create-react-app ./
 
-running server:
+running server (one of below):
+npm satart
 npm run dev
+nodemon srever.js
 
 running client:
 npm start
@@ -16,7 +18,6 @@ https://www.youtube.com/watch?v=w3vs4a03y3I&t=323s
 object to json data conversion after query result(node.js)
 https://www.youtube.com/watch?v=sSeKGS2aKrk
 
-this cis just text
 
 ##########################################
 ////////////////  REACT  /////////////////
