@@ -1,13 +1,11 @@
 
 import './App.css';
+
 import React, { useState, useEffect } from "react";
-import RealTimeData from './components/RealTimeData';
-import HistoricalData from './components/HistoricalData';
-import Controls from './components/Controls';
 
 function App() {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(0); // data = 0; setData() is a method  // state is built-in React object that is used to contain data
   // 
   useEffect(() => {
     fetch("/getMoisture")
@@ -16,45 +14,34 @@ function App() {
       .catch(() => console.log("error"));
   }, []);
    
-  console.log(data);
-
-  // Replace these with actual data fetched from your backend.
-  const [soilMoisture, setSoilMoisture] = useState(50);
-  const [pumpStatus, setPumpStatus] = useState(false);
-  const [history, setHistory] = useState([]);
-
-  const togglePump = () => {
-    setPumpStatus(!pumpStatus);
-    // Call your backend API to toggle the pump status.
-  };
-
-  const changeThreshold = (newThreshold) => {
-    // Call your backend API to update the soil moisture threshold.
-  };
-
-  const changeSchedule = (newSchedule) => {
-    // Call your backend API to update the watering schedule.
-  };
+  console.count(data.humidity);
 
   return (
+
     <div className="App">
 
-      <header className="App-header">
-        <h1>Soil Watering System</h1>
-      </header>
-      <main>
-        <RealTimeData soilMoisture={data.humidity} pumpStatus={pumpStatus} />
-        <HistoricalData history={history} />
-        <Controls
-          onTogglePump={togglePump}
-          onChangeThreshold={changeThreshold}
-          onChangeSchedule={changeSchedule}
-        />
-      </main>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"></link>
+      
+      <body class="box">
+        <div class="container is-fullhd">
+
+          <div class="notification is-dark">
+
+            <h1 class="title is-1 has-text-light" >Smart Soil Watering System</h1>
+
+          </div>
+          <div>
+
+            <div class="title">Humidity: <span class="tag is-link is-large">{data.humidity}%</span> </div>
+            <progress class="progress is-link" value={parseInt(data.humidity)} max="100"></progress>
+            
+          </div>
+
+        </div>
+      </body>
 
     </div>
-    
-    
+
   );
 }
 
