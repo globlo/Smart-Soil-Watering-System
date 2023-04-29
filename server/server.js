@@ -28,9 +28,10 @@ const app = express();
 const bodyParser = require('body-parser');  //read module by using require()
 app.use(bodyParser.json());
 
+let presetVal =[]
 app.post('/sendPreset', (req, res) => {  // Receive presetVal from Front-End
 	// const { presetVal } = req.body;
-	let presetVal = req.body.presetVal;
+	presetVal = req.body.presetVal;
 	console.log(presetVal);
 	
 	res.json({ 
@@ -43,7 +44,7 @@ app.get('/getMoisture', (req, res) => {
     
   res.json({ 
 	"humidity": humidityVal,
-	"preset": 29
+	"preset": presetVal
  })
 });
 
