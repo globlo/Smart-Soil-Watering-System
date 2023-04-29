@@ -12,23 +12,39 @@ port.on('open', function() {
 });
 
 // Get data from IoT Device
-let str = [];
+let humidityVal = [];
 parser.on('data', function(data) {
-	str = data.toString('UTF-8');
-	console.log(str);
+	humidityVal = data.toString('UTF-8');
+	// console.log(str);
 });
 
 
 //////////////// COMMUNICATION TO FRONT-END ///////////////////////
 
 // Create an Express app and define routes:  
-const express = require('express');
+const express = require('express');  //read module by using require()
 const app = express();
 
+const bodyParser = require('body-parser');  //read module by using require()
+app.use(bodyParser.json());
 
-app.get('/getMoisture', function (req, res) {
+app.post('/sendPreset', (req, res) => {  // Receive presetVal from Front-End
+	// const { presetVal } = req.body;
+	let presetVal = req.body.presetVal;
+	console.log(presetVal);
+	
+	res.json({ 
+		"humidity": humidityVal,
+		"preset": presetVal
+    });
+});
+
+app.get('/getMoisture', (req, res) => {
     
-  res.json({ "humidity": str })
+  res.json({ 
+	"humidity": humidityVal,
+	"preset": 29
+ })
 });
 
 
