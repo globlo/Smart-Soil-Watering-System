@@ -21,8 +21,6 @@ function App() {
   console.count(humidityValue);
 
   async function sendPreset(val) {
-    
-
     await fetch('/sendPreset', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -36,10 +34,7 @@ function App() {
           setPresetValue(res_json.preset);
         })
         .catch(error => console.error(error));
-
   };
-
-  const [tempColor, setTempColor] = useState("dry");
 
   async function increaseTemp() {
     setPresetValue(presetValue + 1);
@@ -63,9 +58,6 @@ function App() {
       return setPresetValue(presetValue);
     }
 
-    if (presetValue <= 50) {
-      return setTempColor("dry");
-    }
   };
 
   return (
@@ -74,55 +66,45 @@ function App() {
 
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"></link>
       
-      <body class="box has-background-grey-lighter">
-        <div class="container is-fullhd">
+      <div className="box has-background-grey-lighter">
 
+        <section className="box has-background-dark">
+          <div className="container is-fullhd">
+            <h1 className="title is-1 has-text-link" >Smart Soil Watering System</h1>
+          </div>
+        </section>
 
-          <section class="box has-background-dark">
-            <div class="container is-fullhd">
-              <h1 class="title is-1 has-text-link" >Smart Soil Watering System</h1>
+        <div className="columns is-multiline is-mobile">
+          
+          <div className="column">
+            <div className="box has-background-dark">
+
+              <h2 className="title has-text-white">HUMIDITY: <span><p className="tag is-link is-large">{humidityValue}%</p></span></h2>
+              <progress className="progress is-link" value={parseInt(humidityValue)} max="100"></progress>
+
             </div>
-          </section>
-      
-          <section class="table has-background-grey-lighter">
-            <tr>
-              <th>
-                <div class="field is-grouped is-grouped-centered">
-                  <div class="box has-background-dark">
-                    <div class="container is-fullhd">
+          </div>
 
-                      <div class="title has-text-white">HUMIDITY: <span><p class="tag is-link is-large">{humidityValue}%</p></span></div>
-                      <progress class="progress is-link" value={parseInt(humidityValue)} max="100"></progress>
+          <div className="column">
+            <div className="box has-background-dark">
 
-                    </div>
-                  </div>
-                </div>
-              </th>
-              <th>
-                <div class="field is-grouped is-grouped-centered">
-                  <div class="box has-background-dark">
-                    <div class="container is-fullhd">
-                      <div class="title has-text-white">PRESET</div>
-                      <div className="app-container">
-                        <div className="temperature-display-container">
-                          <div className="temperature-display">{presetValue}%</div>
-                        </div>
-                        <div className="button-container">
-                          <button onClick={increaseTemp}>+</button>
-                          <button onClick={decreaseTemp}>-</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </th>
-            </tr>
-          </section>
-            
+              <h3 className="title has-text-white preset">PRESET</h3>
+
+              <div className="temperature-display-container">
+                <div className="temperature-display">{presetValue}%</div>
+              </div>
+              <div className="button-container">
+                <button onClick={increaseTemp}>+</button>
+                <button onClick={decreaseTemp}>-</button>
+              </div>
+
+            </div>
+          </div>
+         
         </div>
+            
         
-
-      </body>
+      </div>
     </div>
 
   );
