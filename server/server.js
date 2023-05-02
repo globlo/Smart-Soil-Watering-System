@@ -13,11 +13,14 @@ port.on('open', function() {
 
 // Get data from IoT Device
 let humidityVal = [];
+let presetVal =[]
 parser.on('data', function(data) {
-	humidityVal = data.toString('UTF-8');
-	// console.log(str);
+	const [data1, data2] = data.split(',');
+	humidityVal = Number(data1);
+	presetVal = Number(data2);
+	// console.log("type of presetVal is ");
+	// console.log(presetVal);
 });
-
 
 //////////////// COMMUNICATION TO FRONT-END ///////////////////////
 
@@ -28,15 +31,33 @@ const app = express();
 const bodyParser = require('body-parser');  //read module by using require()
 app.use(bodyParser.json());
 
-let presetVal =[]
+
+
 app.post('/sendPreset', (req, res) => {  // Receive presetVal from Front-End
 	// const { presetVal } = req.body;
 	presetVal = req.body.presetVal;
-	console.log(presetVal);
+	// console.log("tyupe off presetVal is ");
+	// console.log(typeof presetVal);
+
+	const data = presetVal.toString();
+	port.write(data, (err) => {  // set the preset value in microcontroller
+	  if (err) {
+		console.error('Error writing to serial port:', err);
+		res.status(500).send('Error sending data to Arduino');
+	  } else {
+		console.log('Data sent to Arduino:', data);
+		// res.send('Data sent to Arduino');
+	  }
+	});
+
+	console.log("humidity is ");
+	console.log(humidityVal);
+	console.log("presetVal is ");
+	console.log( presetVal);
 	
 	res.json({ 
-		"humidity": humidityVal,
-		"preset": presetVal
+		"humidity": humidityVal, //int
+		"preset": presetVal //int
     });
 });
 
