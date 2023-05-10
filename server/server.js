@@ -18,8 +18,8 @@ parser.on('data', function(data) {
 	const [data1, data2] = data.split(',');
 	humidityVal = Number(data1);
 	presetVal = Number(data2);
-	// console.log("type of presetVal is ");
 	// console.log(presetVal);
+	console.log(humidityVal);
 });
 
 //////////////// COMMUNICATION TO FRONT-END ///////////////////////

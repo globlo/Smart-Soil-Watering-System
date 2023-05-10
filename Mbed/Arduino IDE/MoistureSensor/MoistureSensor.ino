@@ -1,51 +1,56 @@
-/*
-  Analog input, analog output, serial output
-
-  Reads an analog input pin, maps the result to a range from 0 to 255 and uses
-  the result to set the pulse width modulation (PWM) of an output pin.
-  Also prints the results to the Serial Monitor.
-
-  The circuit:
-  - potentiometer connected to analog pin 0.
-    Center pin of the potentiometer goes to the analog pin.
-    side pins of the potentiometer go to +5V and ground
-  - LED connected from digital pin 9 to ground through 220 ohm resistor
-
-  created 29 Dec. 2008
-  modified 9 Apr 2012
-  by Tom Igoe
-
-  This example code is in the public domain.
-
-  https://www.arduino.cc/en/Tutorial/BuiltInExamples/AnalogInOutSerial
-*/
 
 // These constants won't change. They're used to give names to the pins used:
 const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
+const int DigitalOutPin = D2;
 
-const int dry = 875;
-const int wet = 392;
+
+const int dry = 882;
+const int wet = 390;
+
+int preset = 50;
+
 
 void setup() {
   // initialize serial communications at 9600 bps:
   Serial.begin(9600);
+  // OtherSerial.begin(9600);
+  pinMode(DigitalOutPin, OUTPUT); 
+  pinMode(D3, OUTPUT); 
 }
 
 void loop() {
 
   // Humidity sensor
-  // read the analog in value:
   int sensorValue = analogRead(analogInPin);
-  // map it to the range of the analog out:
-  int percentageHumidity = map(sensorValue, wet, dry, 0, 100);
-
-  // Serial.print("Humidity(%) = ");
-  Serial.println(percentageHumidity);
-  // Serial.println("%");
-  // wait 2 milliseconds before the next loop for the analog-to-digital
-  delay(2000);
-
+  int percentageHumidity = map(sensorValue, wet, dry, 100, 0); // map the sensor read value to 0-100% scale
   
+  //sending data to node.js
+  Serial.print(percentageHumidity);
+  Serial.print(",");
+  Serial.print(preset);
+  Serial.println();
+  delay(20); //dealying for water gets to the soil
+
+  if(percentageHumidity < preset){ // in the air, enable watering pump
+    digitalWrite(DigitalOutPin, HIGH);
+  }else{  // in the water
+    digitalWrite(DigitalOutPin, LOW);
+  }
+
+  if (Serial.available()) {  // setting the desired huidity value from node.js
+    String data = Serial.readStringUntil('\n');
+    preset = data.toInt();
+
+    if( preset >= 50){
+      digitalWrite(D3, HIGH); 
+    }
+    else{
+      digitalWrite(D3, LOW);
+    }
+    
+    Serial.print("Data received from Node.js: ");
+    Serial.println(data);
+  }
 
 
 }
