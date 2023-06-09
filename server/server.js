@@ -19,7 +19,7 @@ parser.on('data', function(data) {
 	humidityVal = Number(data1);
 	presetVal = Number(data2);
 	// console.log(presetVal);
-	console.log(humidityVal);
+	// console.log(humidityVal);
 });
 
 //////////////// COMMUNICATION TO FRONT-END ///////////////////////
@@ -52,8 +52,8 @@ app.post('/sendPreset', (req, res) => {  // Receive presetVal from Front-End
 
 	console.log("humidity is ");
 	console.log(humidityVal);
-	console.log("presetVal is ");
-	console.log( presetVal);
+	// console.log("presetVal is ");
+	// console.log( presetVal);
 	
 	res.json({ 
 		"humidity": humidityVal, //int
